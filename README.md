@@ -367,7 +367,7 @@ Prueba: intentar dar al empleado 2, que tiene un destino abierto desde enero, ot
 INSERT INTO TAREA VALUES (2, 1, '2026-09-01', NULL, 'riego');
 ```
 
-![Error del trigger de destinos](assets/trigger_destinos.png)
+![Error del trigger de destinos](Assets/trigger_destinos.png)
 
 ### Trigger: un pedido no puede incluir más unidades de las disponibles
 
@@ -416,11 +416,11 @@ Prueba: pedir 500 unidades de un producto.
 INSERT INTO INCLUYE VALUES (5, 1, 500);
 ```
 
-![Error del trigger de stock](assets/trigger_stock.png)
+![Error del trigger de stock](Assets/trigger_stock.png)
 
 Stock después de insertar los datos de prueba, ya descontado:
 
-![Stock tras los pedidos](assets/stock_descontado.png)
+![Stock tras los pedidos](Assets/stock_descontado.png)
 
 **Limitación de los dos triggers.** Solo se ejecutan al insertar (`BEFORE INSERT`). Si después se modificara un destino o la cantidad de una línea con `UPDATE`, no se volvería a comprobar. Para cubrirlo habría que añadir `BEFORE UPDATE`, teniendo en cuenta que la fila no debe compararse consigo misma y que en el stock solo habría que descontar la diferencia.
 
@@ -453,7 +453,7 @@ WHERE fecha_ingreso IS NOT NULL;
 
 Es el subtipo Plus de la jerarquía: los clientes que tienen fecha de ingreso en el programa. Se usa `IS NOT NULL` y no `<> NULL`, porque cualquier comparación con `NULL` usando `=` o `<>` no devuelve nunca filas.
 
-![SELECT * FROM CLIENTES_PLUS](assets/vista_clientes_plus.png)
+![SELECT * FROM CLIENTES_PLUS](Assets/vista_clientes_plus.png)
 
 ### BONIFICACIONES_PLUS
 
@@ -485,7 +485,7 @@ GROUP BY C.ID_CLIENTE, C.NOMBRE, EXTRACT(YEAR FROM P.FECHA), EXTRACT(MONTH FROM 
 
 Ejemplo: en febrero, Paula compró 2 cactus polacos a 12,95 € y 3 enanos de jardín a 6,40 €: 2 × 12,95 + 3 × 6,40 = 45,10 €, y su bonificación es 45,10 × 0,05 = 2,255 €.
 
-![SELECT * FROM BONIFICACIONES_PLUS](assets/vista_bonificaciones.png)
+![SELECT * FROM BONIFICACIONES_PLUS](Assets/vista_bonificaciones.png)
 
 ### PRODUCTIVIDAD_EMPLEADO
 
@@ -505,7 +505,7 @@ GROUP BY E.ID_EMPLEADO, E.NOMBRE, EXTRACT(YEAR FROM P.FECHA), EXTRACT(MONTH FROM
 
 **Qué calcula.** La capacidad de cada empleado de lograr objetivos de venta: cuántos pedidos ha gestionado cada mes y por qué importe. Une cada empleado con los pedidos que gestiona (`P.ID_EMPLEADO = E.ID_EMPLEADO`) y suma el importe de sus líneas.
 
-![SELECT * FROM PRODUCTIVIDAD_EMPLEADO](assets/vista_productividad_empleado.png)
+![SELECT * FROM PRODUCTIVIDAD_EMPLEADO](Assets/vista_productividad_empleado.png)
 
 ### PRODUCTIVIDAD_ZONA
 
@@ -525,21 +525,9 @@ GROUP BY Z.ID_ZONA, Z.ID_VIVERO, EXTRACT(YEAR FROM P.FECHA), EXTRACT(MONTH FROM 
 
 **Qué calcula.** La productividad de cada zona a lo largo del tiempo: cuántos pedidos se han servido desde ella cada mes y por qué importe. Es igual que la anterior, pero agrupando por zona (`P.ID_ZONA = Z.ID_ZONA`). Combinándola con TAREA se puede saber qué empleados estaban en esa zona en cada periodo.
 
-![SELECT * FROM PRODUCTIVIDAD_ZONA](assets/vista_productividad_zona.png)
+![SELECT * FROM PRODUCTIVIDAD_ZONA](Assets/vista_productividad_zona.png)
 
 ## 3.6 Comprobaciones
-
-```sql
-/* Triggers creados por nosotros (sin los internos de PostgreSQL) */
-SELECT tgname FROM pg_trigger WHERE NOT tgisinternal;
-
-/* Vistas del esquema public */
-SELECT table_name FROM information_schema.views WHERE table_schema = 'public';
-```
-
-`pg_trigger` es una tabla del sistema con todos los triggers. PostgreSQL crea triggers internos para controlar las claves foráneas; `WHERE NOT tgisinternal` los oculta para ver solo los nuestros.
-
-![Triggers y vistas creados](assets/comprobaciones.png)
 
 ### Prueba de las restricciones
 
@@ -557,7 +545,7 @@ INSERT INTO TAREA VALUES (3, 4, '2026-10-01', '2026-09-01', 'riego');
 DELETE FROM ZONA WHERE ID_ZONA = 1;
 ```
 
-![Pruebas de las restricciones](assets/pruebas_restricciones.png)
+![Pruebas de las restricciones](Assets/pruebas_restricciones.png)
 
 ---
 
