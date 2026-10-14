@@ -30,6 +30,9 @@ psql -d viveros
 
 # 2. Del modelo entidad/relación al modelo relacional
 
+![Modelo_relacional](Assets/ModeloRelacional.png)
+
+
 ## 2.1 Reglas de transformación
 
 La base de todas las reglas es que **en una tabla cada celda guarda un solo valor**. De ahí sale cómo se transforma cada elemento:
